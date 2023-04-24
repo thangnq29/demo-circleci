@@ -39,12 +39,15 @@ jobs:
           command: |
             npx cypress run 
       - store_artifacts:
+          name: Create screenshots
           path: cypress/screenshots
           destination: screenshots
       - store_artifacts:
+          name: Create videos
           path: cypress/videos
           destination: videos
       - store_artifacts:
+          name: Create report
           path: /root/project/cypress/reports/html
 
   # create-screenshots:
