@@ -61,7 +61,7 @@ describe('Test Login Function',() => {
         
         cy.wait(1000);
         cy.on('window:alert',alert => {
-            expect(alert).to.contains('Wrong password.');
+            expect(alert).to.contains('Wrong password. failed');
         })
     })
 
