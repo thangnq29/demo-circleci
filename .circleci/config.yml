@@ -85,6 +85,7 @@ workflows:
           requires:
             - cypress-run
       - create-reports:
+          requires:
             - cypress-run
 
 
