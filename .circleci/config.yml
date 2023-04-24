@@ -33,23 +33,20 @@ jobs:
       - run:
           name: Install Cypress
           command: |
-            npm install
+            npm install cypress --save-dev
       - save_cache:
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
+          key: node-modules-{{ checksum "package.json" }}
           paths:
             - node_modules
-      - save_cache:
-          key: cypress-cache-{{ checksum "package-lock.json" }}
-          paths:
-            - ~/.cache/Cypress
-      - run:
-          name: Install Cypress
-          command: |
-            $(npm bin)/cypress install
+            - /root/.cache/Cypress
+          - cypress-cache-{{ checksum "package-lock.json" }}
+      # - run:
+      #     name: Install Cypress
+      #     command: |
+      #       $(npm bin)/cypress install
       - run:
           name: Run Cypress tests
           command: |
-            chmod +x ./node_modules/.bin/cypress
             npx cypress run
       - store_artifacts:
           path: cypress/screenshots
