@@ -51,6 +51,7 @@ jobs:
       - store_artifacts:
           name: Create report
           path: /root/project/cypress/reports/html
+          destination: report
 
   # create-screenshots:
   #   docker:
