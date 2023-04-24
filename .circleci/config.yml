@@ -84,10 +84,6 @@ workflows:
       - create-videos:
           requires:
             - cypress-run
-      - create-reports:
-          requires:
-            - cypress-run
-
 
 
 
