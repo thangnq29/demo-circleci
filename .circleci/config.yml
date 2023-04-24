@@ -33,44 +33,16 @@ jobs:
       - run:
           name: Install Cypress
           command: |
-            npm install cypress --save-dev
-      # - save_cache:
-      #     key: v1-dependencies-{{ checksum "package-lock.json" }}
-      #     paths:
-      #       - node_modules
-
-      # - save_cache:
-      #     key: node-modules-{{ checksum "package.json" }}
-      #     paths:
-      #       - node_modules
-      #       - /root/.cache/Cypress
-      #     - cypress-cache-{{ checksum "package-lock.json" }}
+            npm install
+            $(npm bin)/cypress verify
       - save_cache:
-        key: node-modules-{{ checksum "package.json" }}
-        paths:
-          - node_modules
-          - /root/.cache/Cypress
-          - ~/.cache/Cypress
-        if: 'test -f package-lock.json'
-        cache_key: 'node-modules-{{ checksum "package-lock.json" }}-{{ "$(cat package-lock.json | tr "\n" "\\n" | sort | md5)" | cut -c -8 }}'
-
-      # - run:
-      #     name: Install Cypress
-      #     command: |
-      #       $(npm bin)/cypress install
-      # - run:
-      #     name: Run Cypress tests
-      #     command: |
-      #       chmod +x ./node_modules/.bin/cypress
-      #       $(npm bin)/cypress open
-        # - run:
-        #   name: Install Cypress
-        #   command: |
-        #     $(npm bin)/cypress install
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
       - run:
           name: Run Cypress tests
           command: |
-            npx cypress run
+            $(npm bin)/cypress run
       - store_artifacts:
           path: cypress/screenshots
           destination: screenshots
@@ -89,6 +61,7 @@ jobs:
           command: |
             mkdir -p cypress/screenshots
             circleci-agent artifacts download screenshots ./cypress/screenshots
+
   retrieve-videos:
     docker:
       - image: cimg/base:2022.05
@@ -100,6 +73,7 @@ jobs:
           command: |
             mkdir -p cypress/videos
             circleci-agent artifacts download videos ./cypress/videos
+
 workflows:
   test:
     jobs:
