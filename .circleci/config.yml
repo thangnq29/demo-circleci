@@ -48,11 +48,9 @@ jobs:
       #       $(npm bin)/cypress install
       - run:
           name: Run Cypress tests
-          install-browsers: true
-          cypress-command: 'npx cypress run --browser chrome'
-          
-          # chmod +x ./node_modules/.bin/cypress
-          # $(npm bin)/cypress open
+          command: |
+            chmod +x ./node_modules/.bin/cypress
+            npx cypress run
       - store_artifacts:
           path: cypress/screenshots
           destination: screenshots
