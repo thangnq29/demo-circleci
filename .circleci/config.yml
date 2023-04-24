@@ -30,11 +30,6 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
             - v1-dependencies-
-      - run:
-          name: Install Cypress
-          command: |
-            npm install
-            $(npm bin)/cypress verify
       - save_cache:
           key: v1-dependencies-{{ checksum "package-lock.json" }}
           paths:
@@ -42,7 +37,7 @@ jobs:
       - run:
           name: Run Cypress tests
           command: |
-            $(npm bin)/cypress run
+            npx cypress run --browser chrome
       - store_artifacts:
           path: cypress/screenshots
           destination: screenshots
