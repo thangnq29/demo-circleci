@@ -34,7 +34,6 @@ jobs:
           name: Install Cypress
           command: |
             npm install
-            $(npm bin)/cypress verify
       - save_cache:
           key: v1-dependencies-{{ checksum "package-lock.json" }}
           paths:
