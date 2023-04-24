@@ -48,9 +48,8 @@ jobs:
       #       $(npm bin)/cypress install
       - run:
           name: Run Cypress tests
-           command: |
-            install-browsers: true
-            cypress-command: 'npx cypress run --browser chrome'
+          install-browsers: true
+          cypress-command: 'npx cypress run --browser chrome'
           
           # chmod +x ./node_modules/.bin/cypress
           # $(npm bin)/cypress open
