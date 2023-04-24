@@ -44,6 +44,8 @@ jobs:
       - store_artifacts:
           path: cypress/videos
           destination: videos
+      - store_artifacts:
+          path: /root/project/cypress/reports/html
 
   retrieve-screenshots:
     docker:
