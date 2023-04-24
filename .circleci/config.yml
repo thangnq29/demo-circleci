@@ -34,16 +34,39 @@ jobs:
           name: Install Cypress
           command: |
             npm install cypress --save-dev
+      # - save_cache:
+      #     key: v1-dependencies-{{ checksum "package-lock.json" }}
+      #     paths:
+      #       - node_modules
+
+      # - save_cache:
+      #     key: node-modules-{{ checksum "package.json" }}
+      #     paths:
+      #       - node_modules
+      #       - /root/.cache/Cypress
+      #     - cypress-cache-{{ checksum "package-lock.json" }}
       - save_cache:
-          key: node-modules-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-            - /root/.cache/Cypress
-          - cypress-cache-{{ checksum "package-lock.json" }}
+        key: node-modules-{{ checksum "package.json" }}
+        paths:
+          - node_modules
+          - /root/.cache/Cypress
+          - ~/.cache/Cypress
+        if: 'test -f package-lock.json'
+        cache_key: 'node-modules-{{ checksum "package-lock.json" }}-{{ "$(cat package-lock.json | tr "\n" "\\n" | sort | md5)" | cut -c -8 }}'
+
       # - run:
       #     name: Install Cypress
       #     command: |
       #       $(npm bin)/cypress install
+      # - run:
+      #     name: Run Cypress tests
+      #     command: |
+      #       chmod +x ./node_modules/.bin/cypress
+      #       $(npm bin)/cypress open
+        # - run:
+        #   name: Install Cypress
+        #   command: |
+        #     $(npm bin)/cypress install
       - run:
           name: Run Cypress tests
           command: |
