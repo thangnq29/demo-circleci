@@ -41,6 +41,7 @@ jobs:
       - run:
           name: Run Cypress tests
           command: |
+            chmod +x ./node_modules/.bin/cypress
             $(npm bin)/cypress open
       - store_artifacts:
           path: cypress/screenshots
