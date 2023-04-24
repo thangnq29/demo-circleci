@@ -47,26 +47,26 @@ jobs:
       - store_artifacts:
           path: /root/project/cypress/reports/html
 
-  retrieve-screenshots:
+  create-screenshots:
     docker:
       - image: cimg/base:2022.05
     steps:
       - attach_workspace:
           at: /workspace
       - run:
-          name: Retrieve screenshots
+          name: Create screenshots
           command: |
             mkdir -p cypress/screenshots
             circleci-agent artifacts download screenshots ./cypress/screenshots
 
-  retrieve-videos:
+  create-videos:
     docker:
       - image: cimg/base:2022.05
     steps:
       - attach_workspace:
           at: /workspace
       - run:
-          name: Retrieve videos
+          name: Create videos
           command: |
             mkdir -p cypress/videos
             circleci-agent artifacts download videos ./cypress/videos
@@ -78,11 +78,13 @@ workflows:
       - cypress-run:
           requires:
             - workspace
-      - retrieve-screenshots:
+      - create-screenshots:
           requires:
             - cypress-run
-      - retrieve-videos:
+      - create-videos:
           requires:
+            - cypress-run
+      - create-reports:
             - cypress-run
 
 
