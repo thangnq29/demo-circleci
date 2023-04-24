@@ -37,7 +37,7 @@ jobs:
       - run:
           name: Run Cypress tests
           command: |
-            npx cypress run --browser electron
+            npx cypress run 
       - store_artifacts:
           path: cypress/screenshots
           destination: screenshots

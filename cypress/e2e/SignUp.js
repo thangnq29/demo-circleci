@@ -3,7 +3,7 @@ import SignUpComponent from "../tests_base/SignUpComponent";
 const generateRandomUser = usernameLength => {
     const NUMBER = "0123456789";
     const NUMBER_LENGTH = NUMBER.length;
-    let randomUsername = "nqt";
+    let randomUsername = "thangnq";
     for(let i = 0; i < usernameLength; i++){
         randomUsername +=NUMBER.charAt(Math.floor(Math.random() *NUMBER_LENGTH));
     }
