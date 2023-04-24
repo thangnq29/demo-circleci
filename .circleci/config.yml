@@ -42,15 +42,16 @@ jobs:
           key: cypress-cache-{{ checksum "package-lock.json" }}
           paths:
             - ~/.cache/Cypress
-      # - run:
-      #     name: Run Cypress tests
-      #     command: |
-      #       chmod +x ./node_modules/.bin/cypress
-      #       $(npm bin)/cypress open
+
       - run:
           name: Install Cypress
           command: |
             $(npm bin)/cypress install
+      - run:
+          name: Run Cypress tests
+          command: |
+            chmod +x ./node_modules/.bin/cypress
+            $(npm bin)/cypress open
       - store_artifacts:
           path: cypress/screenshots
           destination: screenshots
