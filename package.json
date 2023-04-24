@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-
     "test": "cypress run --browser chrome --headed"
-  
   },
   "author": "",
   "license": "ISC",
