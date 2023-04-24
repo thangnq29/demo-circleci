@@ -41,7 +41,7 @@ jobs:
       - run:
           name: Run Cypress tests
           command: |
-            $(npm bin)/cypress run
+            $(npm bin)/cypress open
       - store_artifacts:
           path: cypress/screenshots
           destination: screenshots
