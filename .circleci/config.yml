@@ -36,9 +36,8 @@ jobs:
             - node_modules
       - run:
           name: Run Cypress tests
-          install-browsers: true
           command: |
-            npx cypress run --browser chrome
+            npx cypress run --browser electron
       - store_artifacts:
           path: cypress/screenshots
           destination: screenshots
