@@ -1,0 +1,93 @@
+# version: 2.1
+# orbs:
+#   cypress: cypress-io/cypress@3
+# workflows:
+#   test:
+#     jobs:
+#       - cypress/run:
+#           install-browsers: true
+#           cypress-command: 'npx cypress run --browser chrome'
+
+version: 2.1
+jobs:
+  workspace:
+    docker:
+      - image: cimg/base:2022.05
+    steps:
+      - run:
+          name: Create workspace directory
+          command: |
+            sudo mkdir -p /workspace
+            sudo chown -R $USER:$USER /workspace
+      - attach_workspace:
+          at: /workspace
+  cypress-run:
+    docker:
+      - image: cypress/base:12.18.3
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v1-dependencies-
+      - run:
+          name: Install Cypress
+          command: |
+            npm install
+            $(npm bin)/cypress verify
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Run Cypress tests
+          command: |
+            $(npm bin)/cypress run
+      - store_artifacts:
+          path: cypress/screenshots
+          destination: screenshots
+      - store_artifacts:
+          path: cypress/videos
+          destination: videos
+
+  retrieve-screenshots:
+    docker:
+      - image: cimg/base:2022.05
+    steps:
+      - attach_workspace:
+          at: /workspace
+      - run:
+          name: Retrieve screenshots
+          command: |
+            mkdir -p cypress/screenshots
+            circleci-agent artifacts download screenshots ./cypress/screenshots
+
+  retrieve-videos:
+    docker:
+      - image: cimg/base:2022.05
+    steps:
+      - attach_workspace:
+          at: /workspace
+      - run:
+          name: Retrieve videos
+          command: |
+            mkdir -p cypress/videos
+            circleci-agent artifacts download videos ./cypress/videos
+
+workflows:
+  test:
+    jobs:
+      - workspace
+      - cypress-run:
+          requires:
+            - workspace
+      - retrieve-screenshots:
+          requires:
+            - cypress-run
+      - retrieve-videos:
+          requires:
+            - cypress-run
+
+
+
+
