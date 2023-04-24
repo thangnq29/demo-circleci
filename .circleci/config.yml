@@ -36,6 +36,7 @@ jobs:
             - node_modules
       - run:
           name: Run Cypress tests
+          install-browsers: true
           command: |
             npx cypress run --browser chrome
       - store_artifacts:
