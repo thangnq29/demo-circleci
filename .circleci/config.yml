@@ -71,7 +71,6 @@ jobs:
           command: |
             mkdir -p cypress/videos
             circleci-agent artifacts download videos ./cypress/videos
-
 workflows:
   test:
     jobs:
