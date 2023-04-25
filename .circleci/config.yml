@@ -39,7 +39,7 @@ jobs:
           command: |
             npx cypress run 
       - store_test_results:
-          path: test-results
+          path: cypress/test-results
       - store_artifacts:
           name: Create screenshots
           path: cypress/screenshots
@@ -52,6 +52,8 @@ jobs:
           name: Create report
           path: /root/project/cypress/reports/html
           destination: report
+      - store_artifacts:
+          path: cypress/test-results
 
   # create-screenshots:
   #   docker:
